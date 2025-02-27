@@ -8,9 +8,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 const API_BASE_URL = 'http://localhost:4003'
 const VALIDATION_SERVICE_URL = 'http://localhost:4002'
 
+interface Result {
+  data?: Record<string, unknown>;
+  error?: string;
+}
+
 export default function OthenticPage() {
-  const [executionResult, setExecutionResult] = useState<any>(null)
-  const [validationResult, setValidationResult] = useState<any>(null)
+  const [executionResult, setExecutionResult] = useState<Result | null>(null)
+  const [validationResult, setValidationResult] = useState<Result | null>(null)
   const [proofOfTask, setProofOfTask] = useState('')
 
   const executeTask = async () => {
@@ -33,9 +38,9 @@ export default function OthenticPage() {
       if (response && response.data.proofOfTask) {
         setProofOfTask(response.data.proofOfTask)
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Failed to execute task:", error)
-      const errorMessage = error.response?.data?.message || error.message
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
       setExecutionResult({ error: errorMessage })
     }
   }
@@ -49,9 +54,10 @@ export default function OthenticPage() {
       const validationResponse = await validateTask(proofOfTask)
       console.log('Validation Result:', JSON.stringify(validationResponse.data))
       setValidationResult(validationResponse)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Failed to validate task:", error)
-      setValidationResult({ error: error.response?.data?.message || error.message })
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
+      setValidationResult({ error: errorMessage })
     }
   }
 
