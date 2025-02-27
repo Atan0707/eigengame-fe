@@ -38,42 +38,7 @@ export function PoolDataCard() {
 
   async function getPoolsData() {
     try {
-      const query = `
-      {
-        pools(
-          first: 10,
-          orderBy: totalValueLockedUSD,
-          orderDirection: desc
-        ) {
-          id
-          token0 {
-            id
-            symbol
-            name
-            decimals
-          }
-          token1 {
-            id
-            symbol
-            name
-            decimals
-          }
-          feeTier
-          liquidity
-          sqrtPrice
-          tick
-          totalValueLockedUSD
-          volumeUSD
-        }
-      }
-      `;
-
-      const response = await fetch('/api/pool', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query }),
+      const response = await fetch('/api/pools?limit=10&minVolume=0', {
         cache: 'no-store',
       });
 
@@ -82,17 +47,13 @@ export function PoolDataCard() {
         throw new Error(errorData.error || 'Network response was not ok');
       }
 
-      const data = await response.json();
+      const result = await response.json();
       
-      if (data.errors) {
-        throw new Error(data.errors[0].message);
+      if (!result.success) {
+        throw new Error(result.error);
       }
 
-      if (!data.data || !data.data.pools) {
-        throw new Error('No pools data found');
-      }
-
-      setPoolsData(data.data.pools);
+      setPoolsData(result.data);
       setError(null);
     } catch (err) {
       console.error('Fetch error:', err);
