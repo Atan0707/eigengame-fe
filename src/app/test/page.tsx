@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 
 const Test = () => {
@@ -28,6 +28,7 @@ const Test = () => {
                 // response.data contains: { success: true, data: [...pools] }
                 setPoolData(response.data.data)
                 console.log(response.data.data)
+                console.log(poolData)
                 // Log the first pool's volumeUSD if it exists
                 if (response.data.data.length > 0) {
                     console.log('Volume USD:', response.data.data[0].volumeUSD)
