@@ -11,6 +11,8 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PoolSummary } from "./PoolSummary";
+import { AISummary } from "./AISummary";
 
 interface Token {
   id: string;
@@ -19,7 +21,7 @@ interface Token {
   decimals: number;
 }
 
-interface PoolData {
+export interface PoolData {
   id: string;
   token0: Token;
   token1: Token;
@@ -100,9 +102,16 @@ export function PoolDataCard() {
     );
   }
 
+  // Calculate total pools, total TVL, and total volume
+  const totalPools = poolsData.length;
+  const totalTVL = poolsData.reduce((acc, pool) => acc + Number(pool.totalValueLockedUSD), 0);
+  const totalVolume = poolsData.reduce((acc, pool) => acc + Number(pool.volumeUSD), 0);
+
   return (
     <div className="w-full max-w-7xl mx-auto space-y-6">
       <h1 className="text-3xl font-bold text-center">Top Liquidity Pools</h1>
+      <PoolSummary totalPools={totalPools} totalTVL={totalTVL} totalVolume={totalVolume} />
+      <AISummary poolData={poolsData} />
       <Tabs defaultValue="grid" className="w-full">
         <TabsList className="grid w-full max-w-[400px] grid-cols-2 mx-auto">
           <TabsTrigger value="grid">Grid View</TabsTrigger>
