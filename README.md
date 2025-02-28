@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DeFi Analytics Platform with AI Insights
 
-## Getting Started
+A modern DeFi analytics dashboard that combines real-time liquidity pool data with AI-powered market analysis. Built with Next.js, Shadcn UI, and OpenRouter AI integration.
 
-First, run the development server:
+## 🌟 Features
 
+### 1. Liquidity Pool Analytics
+- Real-time tracking of top liquidity pools
+- Comprehensive pool metrics including:
+  - Total Value Locked (TVL)
+  - Trading Volume
+  - Fee Tiers
+  - Token Pair Information
+- Multiple view options (Grid/List) for better data visualization
+
+### 2. AI-Powered Market Analysis
+- Integration with OpenRouter AI for intelligent market insights
+- Real-time analysis of:
+  - Market trends
+  - Trading patterns
+  - Token pair performance
+  - Volume analysis
+- Custom AI prompts optimized for DeFi data interpretation
+
+### 3. Task Execution System
+- Dedicated task execution and validation pipeline
+- Proof-of-task verification system
+- Real-time execution status monitoring
+- Validation service integration
+
+## 🚀 Getting Started
+
+1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd <project-directory>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+```bash
+yarn install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables
+```bash
+# Create .env.local file and add:
+NEXT_PUBLIC_OPENROUTER_API_KEY=your_api_key_here
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server
+```bash
+yarn dev
+```
 
-## Learn More
+## 📡 API Endpoints
 
-To learn more about Next.js, take a look at the following resources:
+### Pool Data API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Get Top Pools
+```http
+GET /api/pools
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Get Pools with Parameters
+```http
+GET /api/pools?limit=20&minVolume=1000
+```
+Parameters:
+- `limit`: Number of pools to return (default: 10)
+- `minVolume`: Minimum volume in USD (default: 0)
 
-## Deploy on Vercel
+3. Get Specific Pool
+```http
+GET /api/pools/{poolId}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Task Execution API
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Execute Task
+```http
+POST /task/execute
+```
+
+2. Validate Task
+```http
+POST /task/validate
+```
+
+## 🛠 Tech Stack
+
+- **Frontend**: Next.js 14, React, TypeScript
+- **UI Components**: Shadcn UI
+- **AI Integration**: OpenRouter AI
+- **Data Fetching**: Axios
+- **Styling**: Tailwind CSS
+
+## 🔒 Security Considerations
+
+- API key protection using environment variables
+- Error handling for API failures
+- Rate limiting for API requests
+- Validation of input data
+
+## 🔄 Real-time Updates
+
+The platform automatically refreshes data every 30 seconds to ensure up-to-date information about:
+- Pool liquidity
+- Trading volumes
+- Token prices
+- Market trends
+
+## 🎯 Project Goals
+
+1. Provide real-time DeFi market analytics
+2. Offer AI-powered insights for better decision making
+3. Implement secure task execution and validation
+4. Create an intuitive user interface for data visualization
+
+## 📝 Future Enhancements
+
+- [ ] Additional AI models integration
+- [ ] Advanced filtering options
+- [ ] Historical data analysis
+- [ ] Custom alert system
+- [ ] Portfolio tracking features
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+[MIT License](LICENSE)
